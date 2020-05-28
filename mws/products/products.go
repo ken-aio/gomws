@@ -11,6 +11,15 @@ type Products struct {
 	*mws.Client
 }
 
+// PriceToEstimateFees is GetMyFeesEstimate request object
+type PriceToEstimateFees struct {
+	listingPriceCurrencyCode string
+	listingPriceAmount       int
+	shippingCurrencyCode     string
+	shippingAmount           int
+	pointsPointsNumber       int
+}
+
 // NewClient generate a new product client
 func NewClient(config mws.Config) (*Products, error) {
 	prodcuts := new(Products)
@@ -215,6 +224,26 @@ func (p Products) GetProductCategoriesForASIN(asin string) (*mws.Response, error
 	params := mws.Parameters{
 		"Action":        "GetProductCategoriesForASIN",
 		"ASIN":          asin,
+		"MarketplaceId": p.MarketPlaceId,
+	}
+
+	return p.SendRequest(params)
+}
+
+// GetMyFeesEstimate Returns the parent product categories that a product belongs to, based on ASIN.
+// http://docs.developer.amazonservices.com/ja_JP/products/Products_GetMyFeesEstimate.html
+func (p Products) GetMyFeesEstimate(idType, idValue, requestID string, estimatePrice int, isAmazonFulfilled bool, priceToEstimateFees PriceToEstimateFees) (*mws.Response, error) {
+	params := mws.Parameters{
+		"Action":            "GetMyFeesEstimate",
+		"IdType":            idType,
+		"IdValue":           idValue,
+		"IsAmazonFulfilled": isAmazonFulfilled,
+		"Identifier":        requestID,
+		"PriceToEstimateFees.ListingPrice.CurrencyCode": priceToEstimateFees.listingPriceCurrencyCode,
+		"PriceToEstimateFees.ListingPrice.Amount":       priceToEstimateFees.listingPriceAmount,
+		"PriceToEstimateFees.Shipping.CurrencyCode":     priceToEstimateFees.shippingCurrencyCode,
+		"PriceToEstimateFees.Shipping.Amount":           priceToEstimateFees.shippingAmount,
+		"PriceToEstimateFees.Points.PointsNumber":       priceToEstimateFees.pointsPointsNumber,
 		"MarketplaceId": p.MarketPlaceId,
 	}
 
