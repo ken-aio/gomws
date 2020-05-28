@@ -13,11 +13,11 @@ type Products struct {
 
 // PriceToEstimateFees is GetMyFeesEstimate request object
 type PriceToEstimateFees struct {
-	listingPriceCurrencyCode string
-	listingPriceAmount       int
-	shippingCurrencyCode     string
-	shippingAmount           int
-	pointsPointsNumber       int
+	ListingPriceCurrencyCode string
+	ListingPriceAmount       int
+	ShippingCurrencyCode     string
+	ShippingAmount           int
+	PointsPointsNumber       int
 }
 
 // NewClient generate a new product client
