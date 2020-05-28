@@ -232,7 +232,7 @@ func (p Products) GetProductCategoriesForASIN(asin string) (*mws.Response, error
 
 // GetMyFeesEstimate Returns the parent product categories that a product belongs to, based on ASIN.
 // http://docs.developer.amazonservices.com/ja_JP/products/Products_GetMyFeesEstimate.html
-func (p Products) GetMyFeesEstimate(idType, idValue, requestID string, estimatePrice int, isAmazonFulfilled bool, priceToEstimateFees PriceToEstimateFees) (*mws.Response, error) {
+func (p Products) GetMyFeesEstimate(idType, idValue, requestID string, isAmazonFulfilled bool, priceToEstimateFees PriceToEstimateFees) (*mws.Response, error) {
 	params := mws.Parameters{
 		"Action":            "GetMyFeesEstimate",
 		"IdType":            idType,
