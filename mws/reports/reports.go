@@ -3,7 +3,7 @@ package reports
 // Reference http://docs.developer.amazonservices.com/en_US/reports/Reports_Overview.html
 
 import (
-	"github.com/svvu/gomws/mws"
+	"github.com/ken-aio/gomws/mws"
 )
 
 // Reports is the client for the api

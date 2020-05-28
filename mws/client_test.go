@@ -8,8 +8,8 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/ken-aio/gomws/mws/mock"
 	. "github.com/smartystreets/goconvey/convey"
-	"github.com/svvu/gomws/mws/mock"
 )
 
 const (

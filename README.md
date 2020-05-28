@@ -1,7 +1,7 @@
 # gomws
 Amazon mws API in Go
 
-[![Build Status](https://travis-ci.org/svvu/gomws.svg?branch=master)](https://travis-ci.org/svvu/gomws)
+[![Build Status](https://travis-ci.org/ken-aio/gomws.svg?branch=master)](https://travis-ci.org/ken-aio/gomws)
 
 # Usage
 Example usage can be found in main.go
@@ -9,8 +9,8 @@ Example usage can be found in main.go
 Import the packages
 ```go
 import(
-  "github.com/svvu/gomws/mws"
-  "github.com/svvu/gomws/mws/products"
+  "github.com/ken-aio/gomws/mws"
+  "github.com/ken-aio/gomws/mws/products"
 )
 ```
 Setup the configuration

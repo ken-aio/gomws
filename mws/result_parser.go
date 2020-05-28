@@ -1,7 +1,7 @@
 package mws
 
 import (
-	"github.com/svvu/gomws/xmlParser"
+	"github.com/ken-aio/gomws/xmlParser"
 )
 
 // ResultParser a wrapper of xml parser to add some helper methods.

@@ -3,7 +3,7 @@ package products
 // Reference http://docs.developer.amazonservices.com/en_US/products/Products_Overview.html
 
 import (
-	"github.com/svvu/gomws/mws"
+	"github.com/ken-aio/gomws/mws"
 )
 
 // Products is the client for the api

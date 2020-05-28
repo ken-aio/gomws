@@ -3,7 +3,7 @@
 package orders
 
 import (
-	"github.com/svvu/gomws/mws"
+	"github.com/ken-aio/gomws/mws"
 )
 
 // Orders is the client for the api
