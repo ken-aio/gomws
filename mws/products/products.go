@@ -239,11 +239,11 @@ func (p Products) GetMyFeesEstimate(idType, idValue, requestID string, isAmazonF
 		"IdValue":           idValue,
 		"IsAmazonFulfilled": isAmazonFulfilled,
 		"Identifier":        requestID,
-		"PriceToEstimateFees.ListingPrice.CurrencyCode": priceToEstimateFees.listingPriceCurrencyCode,
-		"PriceToEstimateFees.ListingPrice.Amount":       priceToEstimateFees.listingPriceAmount,
-		"PriceToEstimateFees.Shipping.CurrencyCode":     priceToEstimateFees.shippingCurrencyCode,
-		"PriceToEstimateFees.Shipping.Amount":           priceToEstimateFees.shippingAmount,
-		"PriceToEstimateFees.Points.PointsNumber":       priceToEstimateFees.pointsPointsNumber,
+		"PriceToEstimateFees.ListingPrice.CurrencyCode": priceToEstimateFees.ListingPriceCurrencyCode,
+		"PriceToEstimateFees.ListingPrice.Amount":       priceToEstimateFees.ListingPriceAmount,
+		"PriceToEstimateFees.Shipping.CurrencyCode":     priceToEstimateFees.ShippingCurrencyCode,
+		"PriceToEstimateFees.Shipping.Amount":           priceToEstimateFees.ShippingAmount,
+		"PriceToEstimateFees.Points.PointsNumber":       priceToEstimateFees.PointsPointsNumber,
 		"MarketplaceId": p.MarketPlaceId,
 	}
 
