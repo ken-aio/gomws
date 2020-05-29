@@ -3,6 +3,8 @@ package products
 // Reference http://docs.developer.amazonservices.com/en_US/products/Products_Overview.html
 
 import (
+	"fmt"
+
 	"github.com/ken-aio/gomws/mws"
 )
 
@@ -13,6 +15,10 @@ type Products struct {
 
 // PriceToEstimateFees is GetMyFeesEstimate request object
 type PriceToEstimateFees struct {
+	IDType                   string
+	IDValue                  string
+	IsAmazonFulfilled        bool
+	Identifier               string
 	ListingPriceCurrencyCode string
 	ListingPriceAmount       int
 	ShippingCurrencyCode     string
@@ -232,19 +238,25 @@ func (p Products) GetProductCategoriesForASIN(asin string) (*mws.Response, error
 
 // GetMyFeesEstimate Returns the parent product categories that a product belongs to, based on ASIN.
 // http://docs.developer.amazonservices.com/ja_JP/products/Products_GetMyFeesEstimate.html
-func (p Products) GetMyFeesEstimate(idType, idValue, requestID string, isAmazonFulfilled bool, priceToEstimateFees PriceToEstimateFees) (*mws.Response, error) {
+func (p Products) GetMyFeesEstimate(fees []*PriceToEstimateFees) (*mws.Response, error) {
 	params := mws.Parameters{
-		"Action":            "GetMyFeesEstimate",
-		"IdType":            idType,
-		"IdValue":           idValue,
-		"IsAmazonFulfilled": isAmazonFulfilled,
-		"Identifier":        requestID,
-		"PriceToEstimateFees.ListingPrice.CurrencyCode": priceToEstimateFees.ListingPriceCurrencyCode,
-		"PriceToEstimateFees.ListingPrice.Amount":       priceToEstimateFees.ListingPriceAmount,
-		"PriceToEstimateFees.Shipping.CurrencyCode":     priceToEstimateFees.ShippingCurrencyCode,
-		"PriceToEstimateFees.Shipping.Amount":           priceToEstimateFees.ShippingAmount,
-		"PriceToEstimateFees.Points.PointsNumber":       priceToEstimateFees.PointsPointsNumber,
-		"MarketplaceId": p.MarketPlaceId,
+		"Action": "GetMyFeesEstimate",
+	}
+	formatStr := "FeesEstimateRequestList.FeesEstimateRequest.%d.%s"
+	genKey := func(i int, keyname string) string {
+		return fmt.Sprintf(formatStr, i+1, keyname)
+	}
+	for i, fee := range fees {
+		params[genKey(i, "IdType")] = fee.IDType
+		params[genKey(i, "IdValue")] = fee.IDValue
+		params[genKey(i, "IsAmazonFulfilled")] = fee.IsAmazonFulfilled
+		params[genKey(i, "Identifier")] = fee.Identifier
+		params[genKey(i, "PriceToEstimateFees.ListingPrice.CurrencyCode")] = fee.ListingPriceCurrencyCode
+		params[genKey(i, "PriceToEstimateFees.ListingPrice.Amount")] = fee.ListingPriceAmount
+		params[genKey(i, "PriceToEstimateFees.Shipping.CurrencyCode")] = fee.ShippingCurrencyCode
+		params[genKey(i, "PriceToEstimateFees.Shipping.Amount")] = fee.ShippingAmount
+		params[genKey(i, "PriceToEstimateFees.Points.PointsNumber")] = fee.PointsPointsNumber
+		params[genKey(i, "MarketplaceId")] = p.MarketPlaceId
 	}
 
 	return p.SendRequest(params)
