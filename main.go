@@ -3,9 +3,11 @@ package main
 import (
 	"fmt"
 
+	"github.com/k0kubun/pp"
 	"github.com/ken-aio/gomws/mws"
 	"github.com/ken-aio/gomws/mws/products"
 	"github.com/ken-aio/gomws/mws/reports"
+	"github.com/pkg/errors"
 )
 
 func main() {
@@ -90,4 +92,47 @@ func main() {
 	if err != nil {
 		fmt.Println(err)
 	}
+
+	// Example 4
+	fmt.Println("------GetMyFeesEstimate------")
+	client, err := products.NewClient(config)
+	if err != nil {
+		panic(errors.Wrap(err, "init amazon mws products api error"))
+	}
+	resp, err := client.GetMyFeesEstimate([]*products.PriceToEstimateFees{
+		&products.PriceToEstimateFees{
+			IDType:                   "ASIN",
+			IDValue:                  "B07HCH85V6",
+			IsAmazonFulfilled:        true,
+			Identifier:               "test",
+			ListingPriceCurrencyCode: "JPY",
+			ListingPriceAmount:       22400,
+			ShippingCurrencyCode:     "JPY",
+			ShippingAmount:           0,
+			PointsPointsNumber:       0,
+		},
+		&products.PriceToEstimateFees{
+			IDType:                   "ASIN",
+			IDValue:                  "B00E0GMMHO",
+			IsAmazonFulfilled:        true,
+			Identifier:               "test2",
+			ListingPriceCurrencyCode: "JPY",
+			ListingPriceAmount:       7980,
+			ShippingCurrencyCode:     "JPY",
+			ShippingAmount:           0,
+			PointsPointsNumber:       0,
+		},
+	})
+	if err != nil {
+		panic(errors.Wrap(err, "init amazon mws products api error"))
+	}
+	defer resp.Close()
+	if resp.Error != nil {
+		panic(errors.Wrap(resp.Error, "mws response error"))
+	}
+	parser, err := resp.ResultParser()
+	if err != nil {
+		panic(errors.Wrap(err, "mws GetMatchingProductForID parser error"))
+	}
+	pp.Println("resp: ", parser)
 }
